@@ -38,3 +38,37 @@ resource "aws_route_table_association" "rta2" {
   subnet_id = aws_subnet.subnet-2.id
   route_table_id = aws_route_table.rt.id
 }
+
+resource "aws_security_group" "mysg" {
+  name        = "websg"
+  vpc_id      = aws_vpc.myvpctf.id
+  tags = {
+    Name = "web-sg"
+  }
+
+  ingress {
+    description = "HTTP from VPC"
+    protocol  = "tcp"
+    from_port = 80
+    to_port   = 80
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "SSH"
+    protocol  = "tcp"
+    from_port = 22
+    to_port   = 22
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+
+
