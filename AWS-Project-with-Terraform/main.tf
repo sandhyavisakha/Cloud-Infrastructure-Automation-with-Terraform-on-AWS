@@ -70,5 +70,27 @@ resource "aws_security_group" "mysg" {
   }
 }
 
+resource "aws_s3_bucket" "tfbucket" {
+  bucket = "my-terraform-bucket-sandhya92"
+}
+
+resource "aws_s3_bucket_public_access_block" "tfbucket" {
+  bucket = aws_s3_bucket.tfbucket.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_acl" "tfbucket" {
+  depends_on = [
+    aws_s3_bucket_ownership_controls.tfbucket,
+    aws_s3_bucket_public_access_block.tfbucket,
+  ]
+
+  bucket = aws_s3_bucket.tfbucket.id
+  acl    = "public-read"
+}
 
 
