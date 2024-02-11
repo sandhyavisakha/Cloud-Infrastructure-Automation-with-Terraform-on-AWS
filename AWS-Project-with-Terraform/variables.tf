@@ -1,7 +1,11 @@
-variable "cidr" {
-  default = "10.0.0.0/16"
+variable "vpc-cidr" {
+  description = "This is the CIDR range for VPC"
 }
 
 variable "sub1-cidr" {
-  default = var.sub1-cidr
+  description = "This is the CIDR value for Subnet-1"
+}
+
+variable "sub2-cidr" {
+  description = "This is the CIDR value for Subnet-2"
 }
